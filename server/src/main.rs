@@ -4,6 +4,7 @@ use anyhow::Result;
 use r2d2_sqlite::SqliteConnectionManager;
 use rmcp::{ServiceExt, transport::stdio};
 use tracing_subscriber::EnvFilter;
+use wallet::seed_phrase;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -16,18 +17,22 @@ async fn main() -> Result<()> {
 
     tracing::info!("Starting MCP server");
 
-    let db_path =
-        PathBuf::from_str("/Users/tdelabro/Library/Application Support/cli-wallet.sqlite3")?;
+    let db_path = PathBuf::from_str("/tmp/cashu-mcp-db.sqlite3")?;
     let manager = SqliteConnectionManager::file(&db_path);
-    // let manager = SqliteConnectionManager::memory();
     tracing::info!("Connected to db at '{}'", db_path.to_str().unwrap());
     let pool = r2d2::Pool::new(manager)?;
 
     let mut db_conn = pool.get()?;
     wallet::db::create_tables(&mut db_conn)?;
+    let seed_phrase_manager = wallet::wallet::sqlite::SeedPhraseManager::new(pool.clone())?;
+    if !wallet::wallet::exists(&db_conn)? {
+        let seed_phrase = seed_phrase::create_random()?;
+        wallet::wallet::init(seed_phrase_manager, &db_conn, &seed_phrase)?;
+        tracing::info!("Seed phrase initialized");
+    }
     tracing::info!("Database initialized");
 
-    let server = server::GenericService::new(server::MemoryDataService::new(pool))
+    let server = server::GenericService::new(server::SqliteCashuWalletService::new(pool))
         .serve(stdio())
         .await
         .inspect_err(|e| {
