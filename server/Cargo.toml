@@ -1,0 +1,38 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+rmcp = { workspace = true, features = [
+    "server",
+    "macros",
+    "transport-sse-server",
+    "transport-io",
+    "transport-streamable-http-server",
+    "auth",
+    "elicitation",
+    "schemars",
+] }
+tokio = { workspace = true, features = [
+    "macros",
+    "rt",
+    "rt-multi-thread",
+    "io-std",
+    "signal",
+] }
+serde = { version = "1", features = ["derive"] }
+schemars = "1"
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true, features = ["env-filter", "fmt"] }
+
+# database
+rusqlite = { workspace = true }
+r2d2_sqlite = { workspace = true }
+r2d2 = { workspace = true }
+
+# local
+wallet = { workspace = true, features = ["sqlite-seed-phrase"] }
+starknet-types = { workspace = true }
