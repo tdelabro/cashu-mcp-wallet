@@ -16,5 +16,5 @@ r2d2_sqlite = "0.25.0"
 r2d2 = "0.8.10"
 
 # local
-wallet = { path = "../payment-term/paynet/crates/libs/wallet" }
-starknet-types = { path = "../payment-term/paynet/crates/libs/starknet/types" }
+wallet = { path = "/Users/user/oss-contributions/paynet/crates/libs/wallet" }
+starknet-types = { path = "/Users/user/oss-contributions/paynet/crates/libs/starknet/types" }

@@ -93,32 +93,42 @@ class LongMessageHandler:
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /start command."""
     welcome_message = (
-        "🤖 Cashu MCP Wallet Bot\n\n"
-        "✅ Bot ready!\n\n"
-        "Commands:\n"
-        "/start - Show this message\n"
-        "/help - Show help information\n"
-        "/test_long - Test long message handling\n\n"
-        "Features:\n"
-        "• Handles long Cashu tokens\n"
-        "• Automatic message chunking\n"
-        "• Document upload for very long content\n\n"
-        "Send me any text and I'll echo it back!"
+        "🎉 Welcome to Cashu MCP Wallet Bot!\n\n"
+        "💡 I help you manage your Cashu tokens - digital cash that's private and fast.\n\n"
+        "🪙 Supported currencies:\n"
+        "• Bitcoin (sats)\n"
+        "• Ethereum (gwei)\n"
+        "• USDC & USDT\n"
+        "• Starknet (STRK)\n\n"
+        "💬 Try these commands:\n"
+        "• \"Show my balance\"\n"
+        "• \"Send 10 USD to @username\"\n"
+        "• \"Create 1000 sats\"\n"
+        "• \"Help\" for more info\n\n"
+        "🔒 Your tokens are secure and private!"
     )
     await update.message.reply_text(welcome_message)
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /help command."""
     help_text = (
-        "📚 Help - Cashu MCP Wallet Bot\n\n"
-        "Message Length Handling:\n"
-        "• Short messages (< 4k chars): Sent as regular text\n"
-        "• Long messages (4k-20k chars): Split into chunks\n"
-        "• Very long messages (> 20k chars): Sent as document\n\n"
-        "Testing:\n"
-        "Use /test_long to test different message lengths\n\n"
-        "Cashu Tokens:\n"
-        "This bot is designed to handle Cashu token strings which can be very long hex strings."
+        "📚 Cashu Bot Help\n\n"
+        "💬 Natural Language Commands:\n\n"
+        "💰 Check Balance:\n"
+        "• \"Show my balance\"\n"
+        "• \"Check my wallet\"\n"
+        "• \"How much do I have?\"\n\n"
+        "💸 Send Money:\n"
+        "• \"Send 10 USD to @username\"\n"
+        "• \"Pay @alice 5000 sats\"\n"
+        "• \"Transfer 100 gwei to @bob\"\n\n"
+        "🪙 Create Tokens:\n"
+        "• \"Create 1000 sats\"\n"
+        "• \"Mint 500 gwei\"\n"
+        "• \"Generate 50 micro USDC\"\n\n"
+        "🔒 Security:\n"
+        "• \"Help security\" for safety tips\n\n"
+        "💡 Tip: You can use natural language - just tell me what you want to do!"
     )
     await update.message.reply_text(help_text)
 
@@ -147,7 +157,74 @@ async def echo_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Log message length for debugging
     logger.info(f"Received message: {len(text)} characters")
     
-    # Handle different message lengths
+    # Check for natural language commands
+    text_lower = text.lower().strip()
+    
+    # Balance commands
+    if any(phrase in text_lower for phrase in ["show my balance", "check my wallet", "how much do i have", "what's in my wallet", "balance", "wallet", "funds"]):
+        # Mock balance response for now
+        balance_response = (
+            "💰 Your Cashu Wallet Balance:\n\n"
+            "🪙 Bitcoin: 50,000 sats ($12.50)\n"
+            "⚡ Ethereum: 1,000,000 gwei ($0.50)\n"
+            "💵 USDC: 100 micro USDC ($0.10)\n"
+            "💵 USDT: 500 micro USDT ($0.50)\n\n"
+            "💵 Total Value: ~$13.60 USD\n\n"
+            "💡 What would you like to do next?"
+        )
+        await update.message.reply_text(balance_response)
+        return
+    
+    # Help commands
+    elif any(phrase in text_lower for phrase in ["help security", "security help", "how to stay safe", "safety guide"]):
+        security_response = (
+            "🔐 Security Guide\n\n"
+            "💡 Best Practices:\n\n"
+            "1. **Store Safely**: These tokens are like digital cash\n"
+            "2. **Private Keys**: Never share your private keys\n"
+            "3. **Backup**: Keep a backup of your wallet\n"
+            "4. **Verify**: Always verify amounts before spending\n"
+            "5. **Network**: These work on Lightning Network\n\n"
+            "⚠️ Important:\n"
+            "• Transactions are irreversible\n"
+            "• Double-check recipient usernames\n"
+            "• Keep your device secure\n\n"
+            "🆘 If you lose access:\n"
+            "• Contact support immediately\n"
+            "• Have backup information ready\n\n"
+            "💬 Need more help? Just ask!"
+        )
+        await update.message.reply_text(security_response)
+        return
+    
+    # Send money commands (basic detection)
+    elif any(word in text_lower for word in ["send", "pay", "transfer", "give"]) and "@" in text:
+        await update.message.reply_text(
+            "💸 Send Money Feature\n\n"
+            "🔒 Security Check:\n\n"
+            "⚠️ This feature is coming soon!\n\n"
+            "For now, you can:\n"
+            "• Check your balance\n"
+            "• Get security help\n"
+            "• Test long messages\n\n"
+            "Stay tuned for full send functionality! 🚀"
+        )
+        return
+    
+    # Create/mint commands
+    elif any(word in text_lower for word in ["create", "mint", "generate", "make"]) and any(word in text_lower for word in ["sats", "gwei", "usdc", "usdt"]):
+        await update.message.reply_text(
+            "🪙 Create Tokens Feature\n\n"
+            "⚠️ This feature is coming soon!\n\n"
+            "For now, you can:\n"
+            "• Check your balance\n"
+            "• Get security help\n"
+            "• Test long messages\n\n"
+            "Stay tuned for full token creation! 🚀"
+        )
+        return
+    
+    # Default: Handle as long message echo
     if len(text) <= TELEGRAM_MAX_MESSAGE_LENGTH:
         # Short message - send directly
         await update.message.reply_text(f"📤 Echo: {text}")

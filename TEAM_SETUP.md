@@ -15,7 +15,10 @@ Each developer must create their own bot and token for security.
 # 2. Send /newbot
 # 3. Choose name: "My Cashu Bot"
 # 4. Choose username: "my_cashu_bot_123"
-# 5. Save the token
+# 5. Save the 
+
+
+token
 ```
 
 ### 2. Local Setup
