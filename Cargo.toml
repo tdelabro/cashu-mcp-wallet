@@ -1,0 +1,20 @@
+[workspace]
+resolver = "3"
+members = ["server"]
+
+[workspace.dependencies]
+rmcp = "0.6.1"
+tokio = "1"
+thiserror = "2.0.16"
+anyhow = "1.0.99"
+tracing-subscriber = "0.3.20"
+tracing = "0.1"
+
+# database
+rusqlite = "0.32.0"
+r2d2_sqlite = "0.25.0"
+r2d2 = "0.8.10"
+
+# local
+wallet = { path = "../payment-term/paynet/crates/libs/wallet" }
+starknet-types = { path = "../payment-term/paynet/crates/libs/starknet/types" }
