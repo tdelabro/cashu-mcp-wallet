@@ -73,7 +73,7 @@ It will swap the cashu tokens for new ones, only know by this wallet, preventing
     ) -> Result<CallToolResult, ErrorData> {
         let receipts = self
             .cashu_wallet_service
-            .receive_wads(wads.0)
+            .receive_wads(wads)
             .await
             .map_err(|e| e.into())?;
 
@@ -109,10 +109,7 @@ The returned coma separated wads string should be used to send money to other us
             .map_err(|e| e.into())?;
 
         Ok(CallToolResult::structured(
-            serde_json::to_value(CreateWadsResponse {
-                wads: wad::Wads(wads),
-            })
-            .unwrap(),
+            serde_json::to_value(CreateWadsResponse { wads }).unwrap(),
         ))
     }
 }
