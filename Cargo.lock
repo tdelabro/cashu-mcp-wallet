@@ -1626,6 +1626,7 @@ checksum = "1d87ecb2933e8aeadb3e3a02b828fed80a7528047e68b4f424523a0981a3a084"
 [[package]]
 name = "node-client"
 version = "0.1.0"
+source = "git+https://github.com/nutty-raccoon/paynet#a4a8c5ed8795b0010958dcb3cfaa0a3929a136ca"
 dependencies = [
  "nuts",
  "prost",
@@ -1680,6 +1681,7 @@ dependencies = [
 [[package]]
 name = "nuts"
 version = "0.1.0"
+source = "git+https://github.com/nutty-raccoon/paynet#a4a8c5ed8795b0010958dcb3cfaa0a3929a136ca"
 dependencies = [
  "bitcoin",
  "ciborium",
@@ -1780,6 +1782,17 @@ dependencies = [
  "redox_syscall",
  "smallvec",
  "windows-targets 0.52.6",
+]
+
+[[package]]
+name = "parse-asset-amount"
+version = "0.1.0"
+source = "git+https://github.com/nutty-raccoon/paynet#a4a8c5ed8795b0010958dcb3cfaa0a3929a136ca"
+dependencies = [
+ "nuts",
+ "primitive-types 0.13.1",
+ "thiserror 2.0.16",
+ "uint 0.10.0",
 ]
 
 [[package]]
@@ -2695,6 +2708,8 @@ name = "server"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "async-trait",
+ "parse-asset-amount",
  "r2d2",
  "r2d2_sqlite",
  "rmcp",
@@ -3033,6 +3048,7 @@ dependencies = [
 [[package]]
 name = "starknet-types"
 version = "0.1.0"
+source = "git+https://github.com/nutty-raccoon/paynet#a4a8c5ed8795b0010958dcb3cfaa0a3929a136ca"
 dependencies = [
  "bitcoin_hashes 0.16.0",
  "num-bigint",
@@ -3637,6 +3653,7 @@ checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 [[package]]
 name = "wallet"
 version = "0.1.0"
+source = "git+https://github.com/nutty-raccoon/paynet#a4a8c5ed8795b0010958dcb3cfaa0a3929a136ca"
 dependencies = [
  "bip39",
  "bitcoin",

@@ -27,6 +27,7 @@ thiserror = { workspace = true }
 anyhow = { workspace = true }
 tracing = { workspace = true }
 tracing-subscriber = { workspace = true, features = ["env-filter", "fmt"] }
+async-trait = { workspace = true }
 
 # database
 rusqlite = { workspace = true }
@@ -36,3 +37,4 @@ r2d2 = { workspace = true }
 # local
 wallet = { workspace = true, features = ["sqlite-seed-phrase"] }
 starknet-types = { workspace = true }
+parse-asset-amount = { workspace = true }
